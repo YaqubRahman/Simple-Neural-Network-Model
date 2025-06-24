@@ -1,6 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
+import pandas as pd
+
+url = 'https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv'
+my_dataframe = pd.read_csv(url)
 
 # Createing a Model Class that inherits nn.Module
 class Model(nn.Module):
@@ -30,3 +35,18 @@ class Model(nn.Module):
 torch.manual_seed(41)
 # Create an instance of model
 model = Model()
+
+
+my_dataframe['species'] = my_dataframe['species'].replace('setosa', 0.0)
+my_dataframe['species'] = my_dataframe['species'].replace('versicolor', 1.0)
+my_dataframe['species'] = my_dataframe['species'].replace('virginica', 2.0)
+
+# Training, Testing and Spliting
+# Setting x and y
+x = my_dataframe.drop('species', axis=1)
+y = my_dataframe['species']
+
+x = x.values
+y = y.values
+
+print(my_dataframe)
