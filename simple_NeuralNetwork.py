@@ -108,3 +108,12 @@ plt.xlabel('Epoch')
 plt.show()
 
 # print(model.parameters)
+
+# Evaluate Model on Test Data Set (validate model on test set)
+# Basically turn off back propagation
+with torch.no_grad():
+    y_eval = model.forwardmoving(x_test)
+    # Find the loss or error 
+    loss = criterion(y_eval, y_test) 
+
+print(loss)
