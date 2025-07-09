@@ -102,18 +102,33 @@ for i in range(epochs):
 
 
 # Graphing it out
-plt.plot(range(epochs), losses)
-plt.ylabel("loss/error")
-plt.xlabel('Epoch')
-plt.show()
+#plt.plot(range(epochs), losses)
+#plt.ylabel("loss/error")
+#plt.xlabel('Epoch')
+#plt.show()
 
 # print(model.parameters)
 
 # Evaluate Model on Test Data Set (validate model on test set)
+
 # Basically turn off back propagation
 with torch.no_grad():
     y_eval = model.forwardmoving(x_test)
     # Find the loss or error 
     loss = criterion(y_eval, y_test) 
 
-print(loss)
+#print(loss)
+
+correct = 0
+with torch.no_grad():
+    for i, data in enumerate(x_test):
+        y_val = model.forwardmoving(data)
+
+        # Will tell us what type of flower class our network thinks it is
+        print(f'{i+1}.) {str(y_val)} \t {y_test[i]}')
+
+        # Correct or not
+        if y_val.argmax().item() == y_test[i]:
+            correct += 1
+
+    print(f'We got {correct} correct! ')
