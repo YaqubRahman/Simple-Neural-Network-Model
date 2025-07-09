@@ -23,7 +23,7 @@ class Model(nn.Module):
 
 
     # This function basically moves forward in the neural network
-    def forwardmoving(self, x):
+    def forward(self, x):
         # F refers to line 3
         # relu function is rectified linear unit 
         # relu - bascially do something and if the output is less than 0 just call it 0 otherwise its the output
@@ -79,7 +79,7 @@ losses = []
 for i in range(epochs):
     # Go forward in the network and get a prediction
     # Get predicted results
-    y_prediction = model.forwardmoving(x_train)
+    y_prediction = model.forward(x_train)
 
     # Measure the loss/error, will be high at first
     # Predicted values vs the y_train
@@ -113,7 +113,7 @@ for i in range(epochs):
 
 # Basically turn off back propagation
 with torch.no_grad():
-    y_eval = model.forwardmoving(x_test)
+    y_eval = model.forward(x_test)
     # Find the loss or error 
     loss = criterion(y_eval, y_test) 
 
@@ -122,7 +122,7 @@ with torch.no_grad():
 correct = 0
 with torch.no_grad():
     for i, data in enumerate(x_test):
-        y_val = model.forwardmoving(data)
+        y_val = model.forward(data)
 
         # Will tell us what type of flower class our network thinks it is
         print(f'{i+1}.) {str(y_val)} \t {y_test[i]}')
@@ -132,3 +132,12 @@ with torch.no_grad():
             correct += 1
 
     print(f'We got {correct} correct! ')
+
+
+# Evaluating with new data
+new_iris = torch.tensor([4.7,3.2,1.3,0.2])
+probabilities = torch.softmax(model(new_iris), dim=0)
+print(probabilities)
+
+with torch.no_grad():
+    print(model(new_iris))
